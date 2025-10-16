@@ -1,0 +1,59 @@
+{
+  "extends": ["airbnb", "plugin:node/recommended"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "env": {
+    "es2022": true,
+    "node": true
+  },
+  "rules": {
+    // // ---- Node + ESM fixes ----
+    // "node/no-unsupported-features/es-syntax": "off",
+    // "node/no-unsupported-features/es-builtins": "off",
+    // "node/no-unsupported-features/node-builtins": "off",
+
+    // ---- Airbnb rule overrides ----
+    "no-lonely-if": "off",
+    "dot-notation": "off",
+    "prefer-template": "off",
+    "operator-linebreak": "off",
+    "import/first": "off",
+    "comma-dangle": ["error", "never"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "always",
+        "jsx": "always"
+      }
+    ],
+    "arrow-body-style": ["off", "as-needed"],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectPattern": { "multiline": true, "minProperties": 100 },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": "never"
+      }
+    ],
+    "no-else-return": "off",
+    "indent": ["error", 2],
+    "prettier/prettier": "error",
+    "spaced-comment": "off",
+    "no-console": "warn",
+    "consistent-return": "off",
+    "func-names": "off",
+    "object-shorthand": "off",
+    "no-process-exit": "off",
+    "no-param-reassign": "off",
+    "no-return-await": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }]
+  }
+}

@@ -1,0 +1,73 @@
+extends index
+include _reviews
+
+mixin facts(icon, label, text)
+  .overview-box__detail
+    svg.overview-box__icon
+      use(xlink:href=`/img/icons.svg#icon-${icon}`)
+    span.overview-box__label= label
+    span.overview-box__text= text
+
+mixin guideInfo(name, role, photo)
+  - if(role === 'guide') role = 'Tour-Guide'
+  .overview-box__detail
+    img.overview-box__img(src=`/img/users/${photo}`, alt=`${role}`)
+    span.overview-box__label= role
+    span.overview-box__text= name
+
+block content
+  section.section-header
+    .header__hero
+      .header__hero-overlay &nbsp;
+      img.header__hero-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+    .heading-box
+      h1.heading-primary
+        span= tour.name
+      .heading-box__group
+        .heading-box__detail
+          svg.heading-box__icon
+            use(xlink:href='/img/icons.svg#icon-clock')
+          span.heading-box__text= `${tour.duration} days`
+        .heading-box__detail
+          svg.heading-box__icon
+            use(xlink:href='/img/icons.svg#icon-map-pin')
+          span.heading-box__text= tour.startLocation.description
+
+  section.section-description
+    .overview-box
+      div
+        .overview-box__group
+          h2.heading-secondary.ma-bt-lg Quick facts
+          +facts('trending-up', 'Difficulty', tour.difficulty)
+          +facts('user', 'Participants', tour.maxGroupSize)
+          +facts('star', 'Rating', `${tour.ratingAverage} / 5`)
+        .overview-box__group
+          - const guides = tour.guides
+          h2.heading-secondary.ma-bt-lg Your tour guides
+          each guide in guides
+            +guideInfo(guide.name, guide.role, guide.photo)
+    .description-box
+      h2.heading-secondary.ma-bt-lg= `About the ${tour.name}`
+      - const paragraphs = tour.description.split('\n');
+      p.description__text= paragraphs[0]
+      p.description__text= paragraphs[1]
+  section.section-pictures
+    each img, i in tour.images
+      .picture-box
+        img.picture-box__img(class=`picture-box__img--${i + 1}`, src=`/img/tours/${img}`, alt=`${tour.name} Tour ${i + 1}`)
+  section.section-map
+    div#map(data-locations=`${JSON.stringify(tour.locations)}`)
+  section.section-reviews
+    div.reviews
+      each review in tour.reviews
+        +reviews(review)
+  section.section-cta
+    .cta
+      .cta__img.cta__img--logo
+        img(src='/img/logo-white.png', alt='Natours logo')
+      img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour picture')
+      img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Tour picture')
+      .cta__content
+        h2.heading-secondary What are you waiting for?
+        p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
+        button.btn.btn--green.span-all-rows Book tour now!
