@@ -37,7 +37,7 @@ const sendProdError = (err, req, res) => {
     }
   } else {
     if (err.isOperational) {
-      console.log(err);
+      console.error('ERROR 💥', err);
       return res.status(err.statusCode).render('error', {
         title: 'Something went wrong!',
         msg: err.message
@@ -60,6 +60,7 @@ const sendDevError = (err, req, res) => {
       stack: err.stack
     });
   } else {
+    console.error('ERROR 💥', err);
     return res
       .status(err.statusCode)
       .render('error', { title: 'Somthing went wrong', msg: err.message });

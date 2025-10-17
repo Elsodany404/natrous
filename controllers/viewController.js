@@ -34,7 +34,6 @@ export const getSignup = catchAsync(async (req, res, next) => {
 });
 
 export const getProfile = catchAsync(async (req, res, next) => {
-  console.log(res.locals.user);
   res.status(200).render('profile', {
     title: 'profile'
   });

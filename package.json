@@ -9,13 +9,15 @@
     "start:prod": "NODE_ENV=production node server.js",
     "watch:js": "parcel watch js/index.js --dist-dir public/js",
     "build:js": "parcel build js/index.js --dist-dir public/js",
-    "lint": "eslint . --ext .js",
+    "lint": "eslint .",
     "format": "prettier --write ."
   },
   "dependencies": {
     "@exortek/express-mongo-sanitize": "^1.1.1",
+    "@m-nasser-m/paymob-sdk-eg": "^0.2.11",
     "axios": "^1.12.2",
     "bcryptjs": "^3.0.2",
+    "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
     "core-js": "^3.46.0",
     "dotenv": "^17.2.3",

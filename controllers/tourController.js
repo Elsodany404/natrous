@@ -35,13 +35,13 @@ export const processPhoto = catchAsync(async (req, res, next) => {
   const images = [];
   await Promise.all(
     req.files['images'].map(async (file, i) => {
-      const filename = `tour-${Date.now()}-${i + 1}${path.extname(file.originalname)}`;
-      const saveTo = path.resolve(__dirname, '../public/img/tours');
-      const filePath = path.join(saveTo, filename);
+      const name = `tour-${Date.now()}-${i + 1}${path.extname(file.originalname)}`;
+      const loc = path.resolve(__dirname, '../public/img/tours');
+      const pathToFile = path.join(loc, name);
       await sharp(file.buffer)
         .resize({ width: 2000, height: 1333 })
         .jpeg({ quality: 90 })
-        .toFile(filePath);
+        .toFile(pathToFile);
       images.push(filename);
     })
   );

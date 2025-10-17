@@ -2,7 +2,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 import { xss } from 'express-xss-sanitizer';
 import mongoSanitize from '@exortek/express-mongo-sanitize';
 import path from 'path';
@@ -16,6 +16,7 @@ import reviewRouter from './routes/reviewRouter.js';
 import AppError from './utils/AppError.js';
 import viewRouter from './routes/viewRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
+import compression from 'compression';
 
 dotenv.config({
   path: './config.env'
@@ -29,8 +30,40 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // ✅ Set HTTP security headers
-// app.use(helmet());
-
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https://unpkg.com',
+          'https://cdnjs.cloudflare.com'
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https://unpkg.com',
+          'https://cdnjs.cloudflare.com'
+        ],
+        imgSrc: [
+          "'self'",
+          'data:',
+          'https://*.tile.openstreetmap.org',
+          'https://*.tile.openstreetmap.fr'
+        ],
+        connectSrc: ["'self'"],
+        fontSrc: [
+          "'self'",
+          'https://unpkg.com',
+          'https://cdnjs.cloudflare.com'
+        ],
+        frameAncestors: ["'self'"]
+      }
+    }
+  })
+);
 // ✅ Rate limiting
 const limiter = rateLimit({
   max: 100,
@@ -53,6 +86,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use(compression());
 
 // ✅ Routes
 app.use('/', viewRouter);
