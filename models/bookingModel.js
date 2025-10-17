@@ -24,7 +24,7 @@ const bookingSchema = new mongoose.Schema({
     default: Date.now()
   }
 });
-bookingSchema.pre(/^find/, (next) => {
+bookingSchema.pre(/^find/, function (next) {
   this.populate('user').populate({ path: 'tour', select: 'name' });
   next();
 });

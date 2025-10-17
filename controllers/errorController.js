@@ -26,33 +26,30 @@ const sendProdError = (err, req, res) => {
   if (req.originalUrl.startsWith('/api')) {
     if (err.isOperational) {
       return res.status(err.statusCode).json({
-        // status: err.status,
-        // message: err.message
-        error: err
+        status: err.status,
+        message: err.message
       });
     } else {
       return res.status(500).json({
-        // status: 'error',
-        // message: 'somthing went wrong'
-        error: err
+        status: 'error',
+        message: 'somthing went wrong'
+      });
+    }
+  } else {
+    if (err.isOperational) {
+      console.log(err);
+      return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong!',
+        msg: err.message
+      });
+    } else {
+      console.error('ERROR 💥', err);
+      return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong!',
+        msg: 'Please try again later.'
       });
     }
   }
-  // else {
-  //   if (err.isOperational) {
-  //     console.log(err);
-  //     return res.status(err.statusCode).render('error', {
-  //       title: 'Something went wrong!',
-  //       msg: err.message
-  //     });
-  //   } else {
-  //     console.error('ERROR 💥', err);
-  //     return res.status(err.statusCode).render('error', {
-  //       title: 'Something went wrong!',
-  //       msg: 'Please try again later.'
-  //     });
-  //   }
-  // }
 };
 const sendDevError = (err, req, res) => {
   if (req.originalUrl.startsWith('/api')) {
@@ -70,8 +67,8 @@ const sendDevError = (err, req, res) => {
 };
 
 const globalErrorHandler = (err, req, res, next) => {
-  // err.statusCode = err.statusCode || 500;
-  // err.status = err.status || 'error';
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
     sendDevError(err, req, res);

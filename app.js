@@ -15,6 +15,7 @@ import userRouter from './routes/userRouter.js';
 import reviewRouter from './routes/reviewRouter.js';
 import AppError from './utils/AppError.js';
 import viewRouter from './routes/viewRouter.js';
+import bookingRouter from './routes/bookingRouter.js';
 
 dotenv.config({
   path: './config.env'
@@ -55,6 +56,7 @@ app.set('view engine', 'pug');
 
 // ✅ Routes
 app.use('/', viewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
