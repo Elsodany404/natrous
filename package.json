@@ -5,7 +5,7 @@
   "type": "module",
   "source": "js/index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
+    "start": "node server.js",
     "dev": "nodemon server.js",
     "watch:js": "parcel watch js/index.js --dist-dir public/js",
     "build:js": "parcel build js/index.js --dist-dir public/js",
