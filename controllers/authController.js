@@ -12,17 +12,15 @@ const signToken = (id) => {
   });
 };
 
-export const createSendToken = function (user, statusCode, res) {
+export const createSendToken = function (user, req, statusCode, res) {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
       Date.now() + Number(process.env.COOKIE_EXPIRE_DATE) * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true // make the browser dont access or modifiy cookie
+    httpOnly: true, // make the browser dont access or modifiy cookie
+    secure: req.secure || req.headers('x-forwarded-proto') === 'https'
   };
-  if (process.env.NODE_ENV === 'production') {
-    cookieOptions.secure = true; // make cookie sent as https
-  }
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
@@ -43,7 +41,7 @@ export const signUp = catchAsync(async (req, res, next) => {
   });
   const mailObj = new Email(user, 'http://127.0.0.1:3000/me');
   await mailObj.sendWelcome();
-  createSendToken(user, 200, res);
+  createSendToken(user, req, 200, res);
 });
 export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -59,7 +57,7 @@ export const login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
   // sending token
-  createSendToken(user, 200, res);
+  createSendToken(user, req, 200, res);
 });
 
 export const protect = catchAsync(async (req, res, next) => {
@@ -217,7 +215,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   user.resetPasswordExpires = undefined;
   await user.save();
 
-  createSendToken(user, 200, res);
+  createSendToken(user, req, 200, res);
 });
 
 export const logout = catchAsync(async (req, res, next) => {
@@ -248,5 +246,5 @@ export const updateUserPassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = newPasswordConfirm;
   await user.save();
   // create new token and send it to the user
-  createSendToken(user, 200, res);
+  createSendToken(user, req, 200, res);
 });

@@ -17,12 +17,15 @@ import AppError from './utils/AppError.js';
 import viewRouter from './routes/viewRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
 import compression from 'compression';
+import cors from 'cors';
 
 dotenv.config({
   path: './config.env'
 }); // ✅ Load env vars
 
 const app = express();
+
+app.enable('trust proxy');
 
 // ✅ Logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -83,6 +86,8 @@ app.use(mongoSanitize({ replaceWith: '_' }));
 // ✅ Static files & Pug setup
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+app.use(cors());
+app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
