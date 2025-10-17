@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "plugin:node/recommended"],
+  "extends": ["airbnb-base", "plugin:node/recommended"],
   "plugins": ["prettier"],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -10,10 +10,10 @@
     "node": true
   },
   "rules": {
-    // // ---- Node + ESM fixes ----
-    // "node/no-unsupported-features/es-syntax": "off",
-    // "node/no-unsupported-features/es-builtins": "off",
-    // "node/no-unsupported-features/node-builtins": "off",
+    // ---- Node + ESM fixes ----
+    "node/no-unsupported-features/es-syntax": "off",
+    "node/no-unsupported-features/es-builtins": "off",
+    "node/no-unsupported-features/node-builtins": "off",
 
     // ---- Airbnb rule overrides ----
     "no-lonely-if": "off",
