@@ -11512,7 +11512,7 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 'use strict';
 const login = async (email, password)=>{
     try {
-        const res = await (0, _axiosDefault.default).post('http://127.0.0.1:3000/api/v1/users/login', {
+        const res = await (0, _axiosDefault.default).post('/api/v1/users/login', {
             email,
             password
         }, {
@@ -11530,7 +11530,7 @@ const login = async (email, password)=>{
 };
 const signup = async (email, name, password, passwordConfirm)=>{
     try {
-        const res = await (0, _axiosDefault.default).post('http://127.0.0.1:3000/api/v1/users/sign-up', {
+        const res = await (0, _axiosDefault.default).post('/api/v1/users/sign-up', {
             email,
             password,
             name,
@@ -11549,7 +11549,7 @@ const signup = async (email, name, password, passwordConfirm)=>{
     }
 };
 const logout = async ()=>{
-    const res = await (0, _axiosDefault.default).post('http://127.0.0.1:3000/api/v1/users/logout');
+    const res = await (0, _axiosDefault.default).post('/api/v1/users/logout');
     if (res.status === 200) {
         (0, _alertJs.showAlert)('success', 'logged out');
         location.assign('/');
@@ -16442,7 +16442,7 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alertJs = require("./alert.js");
 const updateData = async (pw, data)=>{
     try {
-        const url = pw ? 'http://127.0.0.1:3000/api/v1/users/update-password' : 'http://127.0.0.1:3000/api/v1/users/update-me';
+        const url = pw ? '/api/v1/users/update-password' : '/api/v1/users/update-me';
         const res = await (0, _axiosDefault.default).patch(url, data, {
             withCredentials: true
         });
