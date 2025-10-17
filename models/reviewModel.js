@@ -21,7 +21,7 @@ const reviewSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      reqired: [true, 'Review must belong to user']
+      required: [true, 'Review must belong to user']
     },
     tour: {
       type: mongoose.Schema.ObjectId,
