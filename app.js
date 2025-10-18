@@ -87,7 +87,7 @@ app.use(mongoSanitize({ replaceWith: '_' }));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(cors());
-app.options('*', cors());
+app.options(/\/*/, cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
