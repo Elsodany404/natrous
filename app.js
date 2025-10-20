@@ -33,40 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // ✅ Set HTTP security headers
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          'https://unpkg.com',
-          'https://cdnjs.cloudflare.com'
-        ],
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          'https://unpkg.com',
-          'https://cdnjs.cloudflare.com'
-        ],
-        imgSrc: [
-          "'self'",
-          'data:',
-          'https://*.tile.openstreetmap.org',
-          'https://*.tile.openstreetmap.fr'
-        ],
-        connectSrc: ["'self'"],
-        fontSrc: [
-          "'self'",
-          'https://unpkg.com',
-          'https://cdnjs.cloudflare.com'
-        ],
-        frameAncestors: ["'self'"]
-      }
-    }
-  })
-);
+// app.use(helmet());
 // ✅ Rate limiting
 const limiter = rateLimit({
   max: 100,

@@ -15,6 +15,8 @@ mixin guideInfo(name, role, photo)
     span.overview-box__label= role
     span.overview-box__text= name
 
+block append head 
+  <script src="https://js.stripe.com/v3/"></script>
 block content
   section.section-header
     .header__hero
@@ -70,4 +72,7 @@ block content
       .cta__content
         h2.heading-secondary What are you waiting for?
         p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
-        button.btn.btn--green.span-all-rows Book tour now!
+        if user
+          button.btn.btn--green.span-all-rows#book-tour(data-tour-id={`${tour.id}`}) Book tour now!
+        else 
+          a.btn.btn--green.span-all-rows Login to book tour

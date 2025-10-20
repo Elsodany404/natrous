@@ -1,11 +1,17 @@
 // server.js
 import dotenv from 'dotenv';
+import fs from 'fs';
+import https from 'https';
+import mongoose from 'mongoose';
 
 dotenv.config({
   path: './config.env'
 }); // Load env vars first
 
-import mongoose from 'mongoose';
+const options = {
+  key: fs.readFileSync('cert/server.key'),
+  cert: fs.readFileSync('cert/server.cert')
+};
 
 // use top-level await for dynamic import
 const { default: app } = await import('./app.js');
@@ -17,8 +23,8 @@ try {
   );
   console.log(':) Database connected');
 
-  app.listen(process.env.PORT, () => {
-    console.log(`:) Server running on port ${process.env.PORT}`);
+  https.createServer(options, app).listen(3000, () => {
+    console.log('HTTPS Server running on https://localhost:3000');
   });
 } catch (err) {
   console.error(':( DB connection failed:', err.message);
