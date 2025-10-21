@@ -27,7 +27,8 @@ const sendProdError = (err, req, res) => {
     if (err.isOperational) {
       return res.status(err.statusCode).json({
         status: err.status,
-        message: err.message
+        message: err.message,
+        isOperational: true
       });
     } else {
       return res.status(500).json({
@@ -87,7 +88,7 @@ const globalErrorHandler = (err, req, res, next) => {
     if (err.name === 'TokenExpiredError') {
       error = handleExpiredJWT(err, req, res);
     }
-    sendProdError(error, req, res);
+    sendProdError(err, req, res);
   }
 };
 export default globalErrorHandler;

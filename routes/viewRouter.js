@@ -15,3 +15,6 @@ viewRouter
   .get(authController.isLoggedIn, viewController.getTour);
 export default viewRouter;
 viewRouter.route('/me').get(authController.protect, viewController.getProfile);
+viewRouter
+  .route('/my-bookings')
+  .get(authController.protect, viewController.getMyBookings);

@@ -15,5 +15,5 @@ bookingRouter
   .delete(bookingController.deleteBooking);
 bookingRouter
   .route('/checkout-session/:tourID')
-  .post(authController.protect, bookingController.createCheckoutSession);
+  .get(authController.protect, bookingController.createCheckoutSession);
 export default bookingRouter;
